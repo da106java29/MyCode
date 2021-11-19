@@ -1,0 +1,73 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>idv.ren</groupId>
+	<artifactId>Ace_Web</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	
+	<!-- 第一步：引入父專案的座標 -->
+	<!-- parent內的參數皆需要對應到parent的參數，其中一個不相同，就會出現錯誤。 -->
+	<parent>
+		<groupId>idv.ren</groupId>
+		<artifactId>junit-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<!-- 當前工程的Pom.xml到父工程的Pom.xml之間的 相對路徑 -->
+		<!-- 父專案的pom.xml檔案的相對路徑。相對路徑允許你選擇一個不同的路徑。預設值是../pom.xml。Maven首先在 構建當前專案的地方尋找父項 
+			目的pom，其次在檔案系統的這個位置（relativePath位置），然後在本地倉庫，最後 在遠端倉庫尋找父專案的pom。 -->
+		<relativePath>../Parent/pom.xml</relativePath>
+	</parent>
+	
+	<!-- 統一JDK版本 -->
+	<profiles>
+		<profile>
+			<id>jdk-1.8</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<jdk>1.8</jdk>
+			</activation>
+			<properties>
+				<maven.compiler.source>1.8</maven.compiler.source>
+				<maven.compiler.target>1.8</maven.compiler.target>
+				<maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+			</properties>
+		</profile>
+	</profiles>
+
+	<properties>
+		<spring.version>5.3.9</spring.version>
+	</properties>
+
+	<!-- 引入依賴jar包 -->
+	<dependencies>
+		<!-- Spring、SpringMVC -->
+
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+		<!-- 引入 spring-webmvc，就不需要引入spring-context，相關依賴會自動載入 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+			<!-- Scope: compile => 編譯、測試、部屬； test => 測試； provied => 編譯、測試。 -->
+			<!-- Scope預設compile； test只在測試階段使用，如 Junit； provied較少用，如 Servlet-api，編譯測試時需要使用到Servlet環境，執行時交由Tomcat提供Servlet環境。 -->
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- 如果使用Maven，有相關依賴自動下載，但是確定不需要某些api，可以使用exclusions排除不需要的API。 -->
+		<!-- 如果其他依賴API都不需要，可使用 * 放置在 groupId、artifactId，其他依賴包皆不會自動下載。 -->
+		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-webmvc</artifactId> 
+			<version>5.3.9</version> <exclusions> <exclusion> <groupId>org.springframework</groupId> 
+			<artifactId>spring-core</artifactId> </exclusion> <exclusion> <groupId>org.springframework</groupId> 
+			<artifactId>spring-beans</artifactId> </exclusion> <exclusion> <groupId>org.springframework</groupId> 
+			<artifactId>spring-aop</artifactId> </exclusion> </exclusions> </dependency> -->
+			
+			
+		<dependency>
+             <groupId>junit</groupId>
+             <artifactId>junit</artifactId>
+         </dependency>
+	</dependencies>
+
+
+</project>
