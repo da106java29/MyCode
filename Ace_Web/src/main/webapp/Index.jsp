@@ -3,11 +3,14 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<script src="../js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+		<link href="resources/BootStrap_5.1.1/js/bootstrap.min.js" rel="stylesheet">
+		<link href="resources/BootStrap_5.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<link href="resources/JQuery_3.6.0/jquery-3.6.0.js" rel="stylesheet">
 		<title>Insert title here</title>
 		
 	</head>
 	<body>
-	
+		<h1>CCC</h1>
+		<button type="button" class="btn btn-outline-info">AA</button>
 	</body>
 </html>
