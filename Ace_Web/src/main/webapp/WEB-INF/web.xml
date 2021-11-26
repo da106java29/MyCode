@@ -3,6 +3,103 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- ##### I. 啟動Spring MVC 容器 Start ##### -->
 	
+	<!-- needed for ContextLoaderListener -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<!-- 設定載入某一處的Spring配置文件 -->
+		<param-value>classpath:applicationContext</param-value>
+	</context-param>
+
+	<!-- Bootstraps the root web application context before servlet initialization -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 	
+	<!-- ##### I. 啟動Spring MVC 容器 End ##### -->
+
+
+	<!-- ##### II. SpringMVC 前端控制器，用他攔截所有請求 Start ##### -->
+	
+	<!-- The front controller of this Spring Web application, responsible for 
+		handling all application requests -->
+	<servlet>
+		<servlet-name>dispatcherServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+
+		<!-- 可以在此處設定 SpringMVC 配置文件的值 -->
+		<!-- 也可以不設定，但是有一個要求，需要指定到一個與 web.xml 同級目錄下的配置文件。 如: dispatcherServlet -->
+		<!-- <init-param> -->
+		<!-- <param-name>contextConfigLocation</param-name> -->
+		<!-- <param-value>location</param-value> -->
+		<!-- </init-param> -->
+
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<!-- Map all requests to the DispatcherServlet for handling -->
+	<servlet-mapping>
+		<servlet-name>dispatcherServlet</servlet-name>
+		<!-- 攔截請求設定，"/" 代表攔截所有請求 -->
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<!-- ##### II. SpringMVC 前端控制器，用他攔截所有請求 End ##### -->
+	
+	<!-- ##### III. 字型編碼過濾器 Start ##### -->
+	<!-- ***** 註 *****
+		編碼過濾器一定要在其他過濾器之前，如 HiddenHttpMethodFilter ，
+		在進入這個過濾器時，就會直接去 request 取得參數，若是在"編碼過濾器"之前，
+		有可能在之後的處理就會有問題。
+	-->
+	
+	<!-- filter 設定攔截使用的filter -->
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<!-- 初始化參數時，指定: -->
+		<init-param>
+			<!-- 指定屬性，在 CharacterEncodingFilter.class 裡面的 encoding -->
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+		<!-- forceRequestEncoding  、  forceResponseEncoding -->
+		<!-- 
+			在 CharacterEncodingFilter.class 中有寫上，這兩個參數若為有設定時，
+			才使用上面配置的 encoding 參數，若是沒有特別設定為 true 的話，預設是給false，
+			會吃不到在這邊設定的 encoding 編碼。
+		-->
+		<init-param>
+			<param-name>forceRequestEncoding</param-name><!-- request 的編碼 -->
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceResponseEncoding</param-name><!-- response 的編碼 -->
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<!-- 設定攔截對象，"/*" 代表所有請求 -->
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- ##### III. 編碼過濾器 End ##### -->
+	
+	<!-- ##### IV. 使用Rest風格的URL，將頁面普通的POST請求轉為指定的delete或put請求 Strat ##### -->
+		
+		<filter>
+			<filter-name>HiddenHttpMethodFilter</filter-name>
+			<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+		</filter>
+		<filter-mapping>
+			<filter-name>HiddenHttpMethodFilter</filter-name>
+			<url-pattern>/*</url-pattern>
+		</filter-mapping>
+		
+	<!-- ##### IV. 使用Rest風格的URL，將頁面普通的POST請求轉為指定的delete或put請求 End ##### -->
+	
+
 </web-app>
