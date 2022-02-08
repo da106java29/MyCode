@@ -1,8 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<!-- 設置springMvc要掃描的組件 -->
+	
+	<context:component-scan base-package="idv.ren">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
 	
 	<!-- Spring 配置文件，這裡主要配置和業務邏輯有關的 -->
+	<!-- #################### 數據源，事務控制 Start #################### -->
+		<!-- 來源位置 : dbconfig.properties -->
+		<context:property-placeholder location="classpath:dbconfig.properties"/>
+		
+		<!-- 用${}獲取properties的參數值 -->
+		<bean id="pooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
+			<!-- DataBase連接位址 -->
+			<property name="jdbcUrl" value="${jdbc.jdbcUrl}"/>
+			<!-- DataBase驅動 -->
+			<property name="driverClass" value="${jdbc.driverClass}"/>
+			<!-- DataBase欲使用的帳號 -->
+			<property name="user" value="${jdbc.user}"/>
+			<!-- DataBase該帳號的密碼 -->
+			<property name="password" value="${jdbc.password}" />
+			<!-- minPoolSize (default:3) : 連線池最小連線數，始終保持的數量。 -->
+			<property name="minPoolSize" value="${jdbc.minPoolSize}"/>
+			<!-- initialPoolSize (default:3) : 必須在min & max 中間，此為"連線池再啟動時，嘗試獲取的連線數。 -->
+			<property name="initialPoolSize" value="${jdbc.initialPoolSize}"></property>
+			<!-- maxPoolSize (default:15) : 連線池最大連線數，在任何給定時間將保持的最大連接數。 -->
+			<property name="maxPoolSize" value="${jdbc.maxPoolSize}"/>
+		</bean>
+	<!-- #################### 數據源，事務控制 End #################### -->
+	
+	<!-- ########## 設置和MyBatis的整合 Start ########## -->
+		
+		<!-- sqlSession的工廠，sqlSession就像是跟資料庫之間的接口，有多種method等等在裡面。 -->
+		<bean id="SqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+			<!-- 指定MyBatis全局配置文件的位置 -->
+			<property name="configLocation" value="classpath:mybatis-context.xml"></property>
+			<!-- 指定數據源的位置 -->
+			<!-- 數據庫的連接池 -->
+			<property name="dataSource" ref="pooledDataSource"></property>
+			<!-- 指定Mybatis,mapper文件的位置 -->
+			<property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+		</bean>
+		
+		<!-- 設置掃描器，將MyBatis接口的實作加入到ioc容器中 -->
+		<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+			<!-- 掃描所有dao接口的實作，加入到ioc容器中 -->
+			<property name="basePackage" value="idv.ren.dao"></property>
+		</bean>
+	
+	<!-- ########## 設置和MyBatis的整合 End ########## -->
+	
+	
+	<!-- ########## 事務控制的設置(重要) Start ########## -->
+		<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+			<!-- 控制住數據源(如:開啟、關閉、回滾、操作) -->
+			<property name="dataSource" ref="pooledDataSource"></property>
+		</bean>
+		
+		<!-- 開啟基於註解的事務設置，使用xml配置形式的事務(必要、主要的都是使用配置方式) -->
+		<aop:config>
+			<!-- AOP切入點表達式 : 表示哪些方法，可能要切入事務-->
+			<!-- *註: idv.ren.service..  ，雙點的意思是，在service下的子資料夾，也會吃的到。* -->
+			<aop:pointcut id="txPoint" expression="execution(* idv.ren.service..*())"/>
+			<!-- 配置事務增強，指定道下方tx:advice id。 -->
+			<aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"/>
+		</aop:config>
+		
+		<!-- 配置事務增強，事務如何切入 -->
+		<!-- 
+			*註 : transaction-manager預設等於"transactionManager"，剛好我們再進行事務控制設置時，id命名相同，因此在此處可以不用寫，
+				但是要注意，事務控制的id若不是"transactionManager"，那要記得在transaction-manager進行設置。
+		-->
+		<tx:advice id="txAdvice" transaction-manager="transactionManager">
+			<tx:attributes>
+				<!-- *代表所有方法都是事務方法 -->
+				<tx:method name="*"/>
+				<!-- get*表示已get開始的所有方法 -->
+				<!-- 假使get代表都是查詢方法，可以給上一個read-only="true" -->
+				<tx:method name="get*" read-only="true"/>
+			</tx:attributes>
+		</tx:advice>
+	<!-- ########## 事務控制的設置(重要) End ########## -->
+	
+	<!-- spring配置文件的核心點，(數據源 與 MyBatis的整合、事務控制) The End-->
 	
 </beans>
