@@ -42,9 +42,10 @@
 	<!-- ########## 設置和MyBatis的整合 Start ########## -->
 		
 		<!-- sqlSession的工廠，sqlSession就像是跟資料庫之間的接口，有多種method等等在裡面。 -->
-		<bean id="SqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<bean id="SqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
 			<!-- 指定MyBatis全局配置文件的位置 -->
-			<property name="configLocation" value="classpath:mybatis-context.xml"></property>
+			<!-- *註:其實也可以都在這邊配置，但通常會保留一份mybatis-config.xml做依據。 -->
+			<property name="configLocation" value="classpath:mybatis-config.xml"></property>
 			<!-- 指定數據源的位置 -->
 			<!-- 數據庫的連接池 -->
 			<property name="dataSource" ref="pooledDataSource"></property>

@@ -47,6 +47,15 @@
 			    <version>4.0.1</version>
 			    <scope>provided</scope>
 			</dependency>
+			
+			<!-- MBG : Mybatis 逆向工程 -->
+			<!-- https://mvnrepository.com/artifact/org.mybatis.generator/mybatis-generator-core -->
+			<!-- 使用方式可參照 http://mybatis.org/generator/quickstart.html (官方原始) -->
+			<dependency>
+			    <groupId>org.mybatis.generator</groupId>
+			    <artifactId>mybatis-generator-core</artifactId>
+			    <version>1.4.0</version>
+			</dependency>
 						
 		</dependencies>
 	</dependencyManagement>

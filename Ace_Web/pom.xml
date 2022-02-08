@@ -112,10 +112,6 @@
 		    <version>8.0.21</version>
 		</dependency>
 		
-		<!--  -->
-		<!--  -->
-		
-		
 		<!-- ##### 引用父類別pom.xml的API Start ##### -->
 		<!-- junit、jstl、servlet -->
 		<dependency>
@@ -132,6 +128,13 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
+        
+        <!-- 逆向工程不再spring內部為主要，放置在父類隨時可以做抽離。 -->
+        <dependency>
+        	<groupId>org.mybatis.generator</groupId>
+        	<artifactId>mybatis-generator-core</artifactId>
+        </dependency>
+        
         <!-- ##### 引用父類別pom.xml的API End ##### -->
         
 	</dependencies>
