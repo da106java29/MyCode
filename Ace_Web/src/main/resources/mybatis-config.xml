@@ -8,4 +8,8 @@
 		<!-- 啟用駝峰式命名規則 -->
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
+	<!-- 類型別名配置 -->
+	<typeAliases>
+		<package name="idv.ren.bean"/>
+	</typeAliases>
 </configuration>
