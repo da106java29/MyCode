@@ -48,7 +48,7 @@
 
 	<!-- ##### II. SpringMVC 前端控制器，用他攔截所有請求 End ##### -->
 	
-	<!-- ##### III. 字型編碼過濾器 Start ##### -->
+	<!-- ##### III. 字型編碼過濾器 Start (一定要放在所有過濾器之前。*註:是Filter之前)##### -->
 	<!-- ***** 註 *****
 		編碼過濾器一定要在其他過濾器之前，如 HiddenHttpMethodFilter ，
 		在進入這個過濾器時，就會直接去 request 取得參數，若是在"編碼過濾器"之前，
@@ -86,7 +86,7 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-	<!-- ##### III. 編碼過濾器 End ##### -->
+	<!-- ##### III. 字型編碼過濾器 End ##### -->
 	
 	<!-- ##### IV. 使用Rest風格的URL，將頁面普通的POST請求轉為指定的delete或put請求 Strat ##### -->
 		
@@ -94,6 +94,7 @@
 			<filter-name>HiddenHttpMethodFilter</filter-name>
 			<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
 		</filter>
+		<!-- 設定這個Filter攔截所有請求(/*) -->
 		<filter-mapping>
 			<filter-name>HiddenHttpMethodFilter</filter-name>
 			<url-pattern>/*</url-pattern>

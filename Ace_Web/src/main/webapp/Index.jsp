@@ -7,7 +7,6 @@
 		<link href="resources/BootStrap_5.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link href="resources/JQuery_3.6.0/jquery-3.6.0.js" rel="stylesheet">
 		<title>Insert title here</title>
-		
 	</head>
 	<body>
 		<h1>CCC</h1>
