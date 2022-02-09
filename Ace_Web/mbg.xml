@@ -1,1 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+  <context id="MySql" targetRuntime="MyBatis3">
+  	<!-- 取消所有註解 -->
+  	<commentGenerator>
+  		<!-- suppressAllComments : 設定生成文件中的註解事項，當suppressAllComments設置為true時，其他項屬性皆會取消生成 -->
+  		<!-- 詳情參考 : http://mybatis.org/generator/configreference/commentGenerator.html -->
+		<property name="suppressAllComments" value="true" />
+	</commentGenerator>
+  
+  	<!-- &amp; = & (XML 不能使用符號 &, 需要轉換成xml看得懂的寫法) -->
+  	<!-- 
+  		Url中的配置 : 
+  			useUnicode=true&amp;characterEncoding=UTF-8&amp; : 解決中文亂碼的問題
+  			serverTimezone=UTC+8 : 需要設定時區，否則在MBG逆向工程會出錯。
+  	-->
+  	<!-- 配置數據庫連接 -->
+    <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+        connectionURL="jdbc:mysql://localhost:3306/mycode?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC+8"
+        userId="root"
+        password="1qaz@WSX">
+    </jdbcConnection>
+	
+	<!-- 設定MBG根據資料庫類型而產生javaBean的相關設定 -->
+    <javaTypeResolver >
+    	<!-- 此屬性用來MBG逆向工程，是否強制使用java.math.BigDecimal 來表示 DECEMAL 跟 NUMERIC 字段，而不是盡可能的替換整數類型。(預設為false) -->
+    	<!-- 詳情請參考 : https://mybatis.org/generator/configreference/javaTypeResolver.html -->
+    	<property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+	
+	<!-- 指定JavaBean生成的位置 -->
+    <javaModelGenerator targetPackage="idv.ren.bean" targetProject=".\src\main\java">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+	
+	<!-- 指定sql映射文件生成的位置 -->
+    <sqlMapGenerator targetPackage="mapper"  targetProject=".\src\main\resources">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+	
+	<!-- 指定DAO接口生成位置 -->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="idv.ren.dao"  targetProject=".\src\main\java">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+
+	<!-- table指定每一個表的生成策略 -->
+	<table tableName="tbl_emp" domainObjectName="Employee">
+		
+	</table>
+	<table tableName="tnl_dept" domainObjectName="Department"></table>
+	
+    <table schema="DB2ADMIN" tableName="ALLTYPES" domainObjectName="Customer" >
+      <property name="useActualColumnNames" value="true"/>
+      <generatedKey column="ID" sqlStatement="DB2" identity="true" />
+      <columnOverride column="DATE_FIELD" property="startDate" />
+      <ignoreColumn column="FRED" />
+      <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" />
+    </table>
+
+  </context>
+</generatorConfiguration>

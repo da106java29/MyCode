@@ -31,11 +31,11 @@
 			<!-- DataBase該帳號的密碼 -->
 			<property name="password" value="${jdbc.password}" />
 			<!-- minPoolSize (default:3) : 連線池最小連線數，始終保持的數量。 -->
-			<property name="minPoolSize" value="${jdbc.minPoolSize}"/>
+<!-- 			<property name="minPoolSize" value="${jdbc.minPoolSize}"/> -->
 			<!-- initialPoolSize (default:3) : 必須在min & max 中間，此為"連線池再啟動時，嘗試獲取的連線數。 -->
-			<property name="initialPoolSize" value="${jdbc.initialPoolSize}"></property>
+<!-- 			<property name="initialPoolSize" value="${jdbc.initialPoolSize}"></property> -->
 			<!-- maxPoolSize (default:15) : 連線池最大連線數，在任何給定時間將保持的最大連接數。 -->
-			<property name="maxPoolSize" value="${jdbc.maxPoolSize}"/>
+<!-- 			<property name="maxPoolSize" value="${jdbc.maxPoolSize}"/> -->
 		</bean>
 	<!-- #################### 數據源，事務控制 End #################### -->
 	
