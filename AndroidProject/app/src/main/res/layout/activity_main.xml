@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fuji"
     tools:context=".MainActivity">
 
     <RelativeLayout
@@ -27,14 +28,13 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="150dp"
-            android:layout_marginTop="589dp"
+            android:layout_marginStart="149dp"
+            android:layout_marginTop="364dp"
             android:layout_marginEnd="149dp"
-            android:layout_marginBottom="95dp"
+            android:layout_marginBottom="320dp"
             android:background="@drawable/bntstyle_pink"
             android:text="@string/open"
-            android:textColor="@color/black"
-            android:onClick="startFloatService"/>
+            android:textColor="@color/black" />
     </RelativeLayout>
 
     <androidx.constraintlayout.widget.Guideline

@@ -12,5 +12,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center"
-        android:textColor="#ffffff" />
+        android:textColor="@color/black"
+        android:text="@string/def_percent"
+        android:textSize="20dp"
+        />
 </LinearLayout>

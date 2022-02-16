@@ -1,6 +1,7 @@
 package idv.ren.batteryapp;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.BatteryManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,7 +53,8 @@ public class FloatWindowSmallView extends LinearLayout {
         viewWidth = view.getLayoutParams().width;
 
         TextView percentView = findViewById(R.id.percent);
-        percentView.setText(FloatService.getBetteryPercent());
+        percentView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Monaco.ttf"));
+        percentView.setText(FloatWindowManager.getNowBatteryPercent(context));
     }
 
     @Override
@@ -105,11 +107,26 @@ public class FloatWindowSmallView extends LinearLayout {
     private int getStatusBarHeight(){
         if(statusBarHeight == 0){
             try {
+
+
+                int statusBarHeight1 = -1;
+                //獲取status_bar_height資源的ID
+                int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+                if (resourceId > 0) {
+                    //根據資源ID獲取響應的尺寸值
+                    statusBarHeight1 = getResources().getDimensionPixelSize(resourceId);
+                }
+                Log.e("statusBar_Height", "高度是 : " + statusBarHeight1);
+                statusBarHeight = statusBarHeight1;
+                /*
                 Class<?> c = Class.forName("com.android.internal.R$dimen");
                 Object o = c.newInstance();
-                Field field = c.getField("status_bra_height");
+                Field field = c.getField("status_bar_height");
                 int x = (Integer) field.get(o);
                 statusBarHeight = getResources().getDimensionPixelSize(x);
+                */
+
+
             }catch (Exception e){
                 e.printStackTrace();
                 Log.e(TAG, "取得狀態欄高度時出現錯誤!!");

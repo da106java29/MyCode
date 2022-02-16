@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ActionMode;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,12 +17,12 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private Button btn_open;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        doBtnListener();
     }
 
     @Override
@@ -37,15 +38,20 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void startFloatService(View view){
-        btn_open = findViewById(R.id.btn_open);
+    public void doBtnListener(){
+        Button btn_open = (Button) findViewById(R.id.btn_open);
+        btn_open.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startFloatService();
+            }
+        });
+    }
 
-        //if(FloatService.isOpen){
-        //    return;
-        //}
-
+    public void startFloatService(){
         if(Settings.canDrawOverlays(this)){
             startService(new Intent(MainActivity.this, FloatService.class));
+            finish();
         }else{
             Toast.makeText(this, "當前未授予權限，請先開啟相關權限。", Toast.LENGTH_SHORT).show();
             startActivityForResult(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
