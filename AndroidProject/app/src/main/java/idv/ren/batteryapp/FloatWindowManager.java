@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.app.Service;
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 import android.os.BatteryManager;
 import android.view.Gravity;
 import android.view.Window;
@@ -72,8 +73,22 @@ public class FloatWindowManager {
      */
     public static void updateUsedPercent(Context context){
         if(smallWindow != null){
+            int betteryPercent = getNowBatteryPercent(context);
             TextView tv_percent = (TextView) smallWindow.findViewById(R.id.percent);
-            tv_percent.setText(getNowBatteryPercent(context));
+            tv_percent.setText(String.valueOf(betteryPercent).concat("%"));
+
+            if(betteryPercent >= 75){
+                //smallWindow.setBackground(R.drawable.battery_100);
+
+            }else if(betteryPercent < 75 && betteryPercent >= 50){
+
+            }else if(betteryPercent < 50 && betteryPercent >= 25){
+
+            }else if(betteryPercent < 25){
+
+            }else{
+
+            }
         }
     }
 
@@ -105,6 +120,13 @@ public class FloatWindowManager {
     }
 
     /**
+     * 取得電池電量
+     */
+    public static int getNowBatteryPercent(Context context){
+        return getbatteryManager(context).getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+    }
+
+    /**
      * 如果BatteryManager尚未創建，則建立一個新的；若有責返回當前BatteryManager
      */
     private static BatteryManager getbatteryManager(Context context){
@@ -114,13 +136,4 @@ public class FloatWindowManager {
         return batteryManager;
     }
 
-    /**
-     * 取得電池電量
-     */
-    public static String getNowBatteryPercent(Context context){
-        if(batteryManager == null){
-            batteryManager = (BatteryManager) context.getSystemService(Context.BATTERY_SERVICE);
-        }
-        return String.valueOf(getbatteryManager(context).getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)).concat("%");
-    }
 }

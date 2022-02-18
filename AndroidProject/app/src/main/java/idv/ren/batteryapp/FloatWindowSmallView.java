@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 
@@ -53,8 +54,8 @@ public class FloatWindowSmallView extends LinearLayout {
         viewWidth = view.getLayoutParams().width;
 
         TextView percentView = findViewById(R.id.percent);
-        percentView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Monaco.ttf"));
-        percentView.setText(FloatWindowManager.getNowBatteryPercent(context));
+        //percentView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Monaco.ttf"));
+        //percentView.setText(FloatWindowManager.getNowBatteryPercent(context));
     }
 
     @Override
@@ -81,8 +82,10 @@ public class FloatWindowSmallView extends LinearLayout {
             case MotionEvent.ACTION_UP:
                 //如果手指離開螢幕時，xDownInScreen 等於 xInScreen，且 yDownInScreen 等於 yInScreen，
                 //則視為單擊事件
+
                 if(xDownInScreen == xInScreen && yDownInScreen == yInScreen){
                     //我沒有要開大窗，先擱置。
+
                 }
             default:break;
         }
