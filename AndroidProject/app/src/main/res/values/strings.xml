@@ -2,5 +2,7 @@
     <string name="app_name">電池小工具</string>
     <string name="login">登入</string>
     <string name="open">開啟</string>
+    <string name="close">關閉</string>
     <string name="def_percent">100%</string>
+    <string name="closeError">尚未開啟應用程式!!</string>
 </resources>

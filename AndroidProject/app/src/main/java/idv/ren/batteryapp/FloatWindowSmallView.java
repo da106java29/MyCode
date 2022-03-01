@@ -53,9 +53,16 @@ public class FloatWindowSmallView extends LinearLayout {
         viewHeight = view.getLayoutParams().height;
         viewWidth = view.getLayoutParams().width;
 
+        initSmallFloatView(context);
+    }
+
+    public void initSmallFloatView(Context context){
+        int betteryPercent = FloatWindowManager.getNowBatteryPercent(context);
         TextView percentView = findViewById(R.id.percent);
-        //percentView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Monaco.ttf"));
-        //percentView.setText(FloatWindowManager.getNowBatteryPercent(context));
+
+        percentView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/Monaco.ttf"));
+        percentView.setText(String.valueOf(betteryPercent).concat("%"));
+        FloatWindowManager.setPercentImg(betteryPercent, percentView);
     }
 
     @Override
@@ -85,11 +92,9 @@ public class FloatWindowSmallView extends LinearLayout {
 
                 if(xDownInScreen == xInScreen && yDownInScreen == yInScreen){
                     //我沒有要開大窗，先擱置。
-
                 }
             default:break;
         }
-
         return true;
     }
 
@@ -110,8 +115,6 @@ public class FloatWindowSmallView extends LinearLayout {
     private int getStatusBarHeight(){
         if(statusBarHeight == 0){
             try {
-
-
                 int statusBarHeight1 = -1;
                 //獲取status_bar_height資源的ID
                 int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
@@ -128,8 +131,6 @@ public class FloatWindowSmallView extends LinearLayout {
                 int x = (Integer) field.get(o);
                 statusBarHeight = getResources().getDimensionPixelSize(x);
                 */
-
-
             }catch (Exception e){
                 e.printStackTrace();
                 Log.e(TAG, "取得狀態欄高度時出現錯誤!!");

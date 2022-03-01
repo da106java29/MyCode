@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 public class FloatWindowManager {
 
+    public static boolean isCreate = false;
+
     //小窗View實體
     private static FloatWindowSmallView smallWindow;
 
@@ -50,6 +52,7 @@ public class FloatWindowManager {
 
             smallWindow.setParams(smallWindowParams);
             windowManager.addView(smallWindow, smallWindowParams);
+            isCreate = true;
         }
     }
 
@@ -63,6 +66,7 @@ public class FloatWindowManager {
             WindowManager windowManager = getWindowManaget(context);
             windowManager.removeView(smallWindow);
             smallWindow = null;
+            isCreate = false;
         }
     }
 
@@ -77,21 +81,29 @@ public class FloatWindowManager {
             TextView tv_percent = (TextView) smallWindow.findViewById(R.id.percent);
             tv_percent.setText(String.valueOf(betteryPercent).concat("%"));
 
-            if(betteryPercent >= 75){
-                //smallWindow.setBackground(R.drawable.battery_100);
-
-            }else if(betteryPercent < 75 && betteryPercent >= 50){
-
-            }else if(betteryPercent < 50 && betteryPercent >= 25){
-
-            }else if(betteryPercent < 25){
-
-            }else{
-
-            }
+            setPercentImg(betteryPercent, tv_percent);
         }
     }
 
+    public static void setPercentImg(int betteryPercent, TextView tv_percent){
+        if(betteryPercent >= 90){
+            tv_percent.setBackgroundResource(R.drawable.battery_100);
+        }else if(betteryPercent < 90 && betteryPercent >= 75){
+            tv_percent.setBackgroundResource(R.drawable.battery_85);
+        }else if(betteryPercent < 75 && betteryPercent >= 60){
+            tv_percent.setBackgroundResource(R.drawable.battery_70);
+        }else if(betteryPercent < 60 && betteryPercent >= 45){
+            tv_percent.setBackgroundResource(R.drawable.battery_55);
+        }else if(betteryPercent < 45 && betteryPercent >= 30){
+            tv_percent.setBackgroundResource(R.drawable.battery_40);
+        }else if(betteryPercent < 30 && betteryPercent >= 20) {
+            tv_percent.setBackgroundResource(R.drawable.battery_30);
+        }else if(betteryPercent <= 20){
+            tv_percent.setBackgroundResource(R.drawable.battery_20);
+        }else{
+            tv_percent.setBackgroundResource(R.drawable.battery_100);
+        }
+    }
     /*
      *  如果WindowManager尚未創建，則建立一個返回給他。否則返回當前Manager。
      */
@@ -136,4 +148,11 @@ public class FloatWindowManager {
         return batteryManager;
     }
 
+    public boolean getIsCreate(){
+        return this.isCreate;
+    }
+
+    public void setIsCreate(boolean type){
+        this.isCreate = type;
+    }
 }
