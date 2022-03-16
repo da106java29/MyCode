@@ -5,7 +5,8 @@
 
     <!-- 建立服務 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
 
     <application
@@ -15,6 +16,7 @@
         android:roundIcon="@drawable/battery_appicon"
         android:supportsRtl="true"
         android:theme="@style/Theme.BatteryApp">
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -24,7 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".FloatService"></service>
+
+        <service android:name=".FloatService" />
     </application>
 
 </manifest>

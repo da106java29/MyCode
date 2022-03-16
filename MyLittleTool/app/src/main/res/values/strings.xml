@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MyLittleTool</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
+    <string name="act_showText">只是小工具的APP介面，此處無功能。</string>
+    <string name="tv_text">金額</string>
+    <string name="tv_dateText">2099年9月9日 - 早上0:00分</string>
+</resources>
